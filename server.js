@@ -132,6 +132,41 @@ app.post("/orgs/:orgId/agents/:agentId/answer", async (req, res) => {
   }
 
   sseWrite(res, {
+    type: EventType.CUSTOM,
+    name: "citations",
+    value: {
+      citations: [
+        {
+          id: "NB4GO5LIOZNDOMSRGZT4HMLJM5US4NBWGU4TILTEMVTGC5LMOQ",
+          title: "About Coveo In-Product Experience",
+          uri: "https://docs.coveo.com/en/n47d1000/",
+          clickUri: "https://docs.coveo.com/en/n47d1000/",
+          permanentid:
+            "954f9d44bee238a72b0abc2fcd52823a0cca3e16cb3ac35163764b25c79c",
+          primaryId: "NB4GO5LIOZNDOMSRGZT4HMLJM5US4NBWGU4TILTEMVTGC5LMOQ",
+          text: "# About Coveo In-Product Experience ...",
+          source: "Coveo Docs",
+          filetype: "html",
+        },
+        {
+          id: "NNYWUR3FMM3WI5L2J4YXOVDENAXDINRVHE2C4ZDFMZQXK3DU",
+          title:
+            "Create and manage in-product experiences | Coveo In-Product Experience",
+          uri: "https://docs.coveo.com/en/3160/",
+          clickUri: "https://docs.coveo.com/en/3160/",
+          permanentid:
+            "e607f4ffe29a5bada0e7c02cb25e4cf6ffea892380f6ef67c2f633a3962b",
+          primaryId: "NNYWUR3FMM3WI5L2J4YXOVDENAXDINRVHE2C4ZDFMZQXK3DU",
+          text: "# Create and manage in-product experiences ...",
+          source: "Coveo Docs",
+          filetype: "html",
+        },
+      ],
+    },
+    timestamp: Date.now(),
+  });
+
+  sseWrite(res, {
     type: EventType.RUN_FINISHED,
     threadId,
     runId,
@@ -191,6 +226,21 @@ app.post("/orgs/:orgId/agents/:agentId/follow-up", async (req, res) => {
     return;
   }
 
+  // Searching step
+  sseWrite(res, {
+    type: EventType.STEP_STARTED,
+    stepName: "searching",
+    timestamp: Date.now(),
+  });
+
+  await delay(200);
+
+  sseWrite(res, {
+    type: EventType.STEP_FINISHED,
+    stepName: "searching",
+    timestamp: Date.now(),
+  });
+
   // Thinking
   sseWrite(res, {
     type: EventType.STEP_STARTED,
@@ -203,6 +253,12 @@ app.post("/orgs/:orgId/agents/:agentId/follow-up", async (req, res) => {
   sseWrite(res, {
     type: EventType.STEP_FINISHED,
     stepName: "thinking",
+    timestamp: Date.now(),
+  });
+
+  sseWrite(res, {
+    type: EventType.STEP_STARTED,
+    stepName: "answering",
     timestamp: Date.now(),
   });
 
@@ -220,6 +276,47 @@ app.post("/orgs/:orgId/agents/:agentId/follow-up", async (req, res) => {
       timestamp: Date.now(),
     });
   }
+
+  sseWrite(res, {
+    type: EventType.CUSTOM,
+    name: "citations",
+    value: {
+      citations: [
+        {
+          id: "NB4GO5LIOZNDOMSRGZT4HMLJM5US4NBWGU4TILTEMVTGC5LMOQ",
+          title: "About Coveo In-Product Experience",
+          uri: "https://docs.coveo.com/en/n47d1000/",
+          clickUri: "https://docs.coveo.com/en/n47d1000/",
+          permanentid:
+            "954f9d44bee238a72b0abc2fcd52823a0cca3e16cb3ac35163764b25c79c",
+          primaryId: "NB4GO5LIOZNDOMSRGZT4HMLJM5US4NBWGU4TILTEMVTGC5LMOQ",
+          text: "# About Coveo In-Product Experience ...",
+          source: "Coveo Docs",
+          filetype: "html",
+        },
+        {
+          id: "NNYWUR3FMM3WI5L2J4YXOVDENAXDINRVHE2C4ZDFMZQXK3DU",
+          title:
+            "Create and manage in-product experiences | Coveo In-Product Experience",
+          uri: "https://docs.coveo.com/en/3160/",
+          clickUri: "https://docs.coveo.com/en/3160/",
+          permanentid:
+            "e607f4ffe29a5bada0e7c02cb25e4cf6ffea892380f6ef67c2f633a3962b",
+          primaryId: "NNYWUR3FMM3WI5L2J4YXOVDENAXDINRVHE2C4ZDFMZQXK3DU",
+          text: "# Create and manage in-product experiences ...",
+          source: "Coveo Docs",
+          filetype: "html",
+        },
+      ],
+    },
+    timestamp: Date.now(),
+  });
+
+  sseWrite(res, {
+    type: EventType.STEP_FINISHED,
+    stepName: "answering",
+    timestamp: Date.now(),
+  });
 
   sseWrite(res, {
     type: EventType.RUN_FINISHED,
