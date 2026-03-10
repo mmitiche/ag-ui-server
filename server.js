@@ -116,6 +116,20 @@ app.post("/orgs/:orgId/agents/:agentId/answer", async (req, res) => {
     timestamp: Date.now(),
   });
 
+  // Simulate cannot answer
+  if (question.includes("cannot answer")) {
+    sseWrite(res, {
+      type: EventType.RUN_FINISHED,
+      threadId,
+      runId,
+      timestamp: Date.now(),
+      result: { answerGenerated: false },
+    });
+
+    res.end();
+    return;
+  }
+
   const answer = buildAnswer(req.body?.q ?? "", "head");
 
   const chunks = answer.split(/(\n)/);
@@ -255,6 +269,20 @@ app.post("/orgs/:orgId/agents/:agentId/follow-up", async (req, res) => {
     stepName: "thinking",
     timestamp: Date.now(),
   });
+
+  // Simulate cannot answer
+  if (question.includes("cannot answer")) {
+    sseWrite(res, {
+      type: EventType.RUN_FINISHED,
+      threadId,
+      runId,
+      timestamp: Date.now(),
+      result: { answerGenerated: false },
+    });
+
+    res.end();
+    return;
+  }
 
   sseWrite(res, {
     type: EventType.STEP_STARTED,
