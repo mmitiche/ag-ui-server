@@ -33,6 +33,45 @@ When discussing "${question}", we usually analyze different aspects of "${questi
 - Testing "${question}" helps validate the UI behavior.
 - In this mock server, "${question}" is intentionally repeated for realism.
 
+${
+  question.includes("code")
+    ? `
+### Example Code
+
+\`\`\`
+<script type="module" src="https://static.cloud.coveo.com/atomic/v3/atomic.esm.js"></script>
+<link rel="stylesheet" href="https://static.cloud.coveo.com/atomic/v3/themes/coveo.css"/>
+<atomic-search-interface id="search-interface">
+  <atomic-search-layout>
+    <atomic-layout-section section="search">
+      <atomic-search-box></atomic-search-box>
+    </atomic-layout-section>
+    <atomic-layout-section section="facets">
+      <atomic-facet-manager>
+        <atomic-facet field="author" label="Authors"></atomic-facet>
+      </atomic-facet-manager>
+    </atomic-layout-section>
+    <atomic-layout-section section="main">
+      <atomic-layout-section section="results">
+        <atomic-result-list>
+          <atomic-result-template>
+            <template>
+              <atomic-result-link></atomic-result-link>
+            </template>
+          </atomic-result-template>
+        </atomic-result-list>
+      </atomic-layout-section>
+      <atomic-layout-section section="pagination">
+        <atomic-load-more-results></atomic-load-more-results>
+      </atomic-layout-section>
+    </atomic-layout-section>
+  </atomic-search-layout>
+</atomic-search-interface>
+\`\`\`
+`
+    : ""
+}
+
 In summary, this response demonstrates how "${question}" would look in a real scenario.`;
 }
 
